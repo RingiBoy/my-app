@@ -4,7 +4,7 @@ const User = (props) => {
     const {id, name}=props;
     return (
         <div>
-            {id}--{name}
+            {id}--{name} 
         </div>
     );
 };

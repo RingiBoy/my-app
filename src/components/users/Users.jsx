@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import User from "../user/User";
 
-// https://jsonplaceholder.typicode.com/users
+// https://jsonplaceholder.typicode.com/
 
 
 const Users = () => {
