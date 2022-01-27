@@ -16,6 +16,7 @@ const CommentsPosta = () => {
 
   return (
     <div>
+      @commentsPosta
       <hr />
       <h4>Comments by post id:</h4>
       {comments.map((comment) => (

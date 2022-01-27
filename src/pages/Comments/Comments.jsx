@@ -13,6 +13,7 @@ const Comments = () => {
 
   return( 
   <div>
+    @comments
       {comments.map(value=><Comment comment={value}/>)}
       
       </div>);
