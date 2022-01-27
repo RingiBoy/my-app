@@ -13,10 +13,9 @@
   text-decoration: none;
 }
 
-
-.header a[class='active']{
-    text-decoration: underline;
-    color: brown;
+.header a[class="active"] {
+  text-decoration: underline;
+  color: brown;
 }
 /* 
 .footer {
@@ -30,9 +29,14 @@
 .outlet {
   width: 95%;
   margin: 0 auto;
-  
+display: flex;
   overflow: hidden;
   overflow-y: auto;
 }
 
-
+.lr {
+  display: flex;
+  color: azure;
+  background-color: darkslategray;
+  
+}
