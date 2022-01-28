@@ -28,9 +28,10 @@ const Layout = () => {
         </Button>
       </div>
 
-      <div>
-      <Outlet className={css.outlet} />
-      </div>
+      
+        VVVVV toot VVVVV
+        <Outlet className={css.outlets}/>
+      
     </>
   );
 };
