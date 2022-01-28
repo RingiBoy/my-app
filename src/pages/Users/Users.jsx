@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import User from "../../components/User/User";
 import { usersService } from "../../services/user.service";
+import css from "./users.module.css";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -11,12 +12,17 @@ const Users = () => {
   }, []);
 
   return (
-    <div>
-      <Outlet/>
-      <h3>Users:</h3>
-      {users.map((user) => (
-        <User key={user.id} user={user} />
-      ))}
+    <div className={css.lr}>
+      
+      <div className={css.users}>
+        <h3>Users:</h3>
+        {users.map((user) => (
+          <User key={user.id} user={user} />
+        ))}
+      </div>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };

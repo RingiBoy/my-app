@@ -29,7 +29,7 @@ const Layout = () => {
       </div>
 
       
-        VVVVV toot VVVVV
+        
         <Outlet className={css.outlets}/>
       
     </>

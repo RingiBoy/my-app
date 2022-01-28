@@ -1,10 +1,12 @@
 .lr {
   display: flex;
+
 }
 
-.users {
-  width: 200px;
-  height: 200px;
+.posts {
+  width: 700px;
+  
   margin-right: 60px;
   margin-left: 10px;
+  
 }
