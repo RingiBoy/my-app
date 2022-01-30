@@ -5,13 +5,23 @@ export const getAllCars = createAsyncThunk(
   //это функция  которая не объект как createSlice()
 
   "carSlice/getAllCars", //первым параметром передаем название слайса на котрый ссылаемся
-  async () => {
+  async (_, {rejectWithValue}) => {
     try {
       const cars = await carService.getAll();
+      console.log('cars:', cars)
       return cars;
-    } catch (e) {}
+    } catch (e) {
+      return rejectWithValue(e.message)    //эта ошибка  
+    }
   }
 );
+
+
+
+
+
+
+
 
 const carSlice = createSlice({
   name: "carSlice",
@@ -46,8 +56,11 @@ const carSlice = createSlice({
     
     
     
-    [getAllCars.rejected]: (state, action) => {}, //реджект это когда бек отдал ошибку по нашему запросу
-  },
+    [getAllCars.rejected]: (state, action) => {
+      state.status='rejected'
+      state.error = action.payload      //получаем данные об ошибке с кетча выше   наша ошибка прописалась в акшин.пейлоад
+    } //реджект это когда бек отдал ошибку по нашему запросу
+  }
 });
 
 export const { addCar, deleteCar } = carSlice.actions;
