@@ -1,29 +1,56 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { carService } from "../services";
+
+export const getAllCars = createAsyncThunk(
+  //это функция  которая не объект как createSlice()
+
+  "carSlice/getAllCars", //первым параметром передаем название слайса на котрый ссылаемся
+  async () => {
+    try {
+      const cars = await carService.getAll();
+      return cars;
+    } catch (e) {}
+  }
+);
 
 const carSlice = createSlice({
-  name: "carSlice", //идентификатор слайса, их может быть много и мы указываем под каким именем будет первый слайс)
-  //далее мы должны указать начальное значение нашего стейта: указываем, что это будет объект фиг скобками {}
+  name: "carSlice",
   initialState: {
-    cars: [], //по умолчанию у нас там будет пустой массив. п.с. положили туда наши карсы.
+    cars: [],
+    status:null,
+    error:null
   },
   reducers: {
-    //через запятую пишем наши редюсерсы, а в них наши методы котрыми ми будет рабоать с нашим стейтом
     addCar: (state, action) => {
-        state.cars.push({
-          id:new Date().getTime(),   //далее передаем данные с формы в виде объекта дата, мы должны его деструктуризировать. Приходят они в наш єкшин, поєтому его и десттруктуризируем
-          ...action.payload.data     //тк. мы передали данные Дэйта как объект, то достаем данные через пейлоад точка дата, если бы мы передавали не объект, то достаточно было бы написать пейлоад без  точка Дэйта
-        })
-    }, //это будет стрел. функция, котрая в себя будет принимать стейт и экшин
+      state.cars.push({
+        id: new Date().getTime(),
+        ...action.payload.data
+      });
+    },
     deleteCar: (state, action) => {
-      state.cars=state.cars.filter(car=>car.id!==action.payload.id)  //id записался в пейлоад из компоненты кар в диспатче
+      state.cars = state.cars.filter((car) => car.id !== action.payload.id)
     }
+  },
+  extraReducers: {
+    //место куда мы возвращаем наши кары с асинкэвейта const cars = await carService.getAll(); У него есть несколько стадий на котрых мы можем отлавливать наши данные.
+    [getAllCars.pending]: (state, action) => {
+      state.status='Loading...'  //сюда можем прогрузить какую-то компоненту, пока данные еще не получены!!
+      state.error=null
+    },//getAll() как только отрабатывает эта фукнция, то она переходит в состояние запроса/До загрузки, т.е. еще не получили данные / значениями будут Стейт и Экшин
+    
+    
+    [getAllCars.fulfilled]: (state, action) => {
+      state.status='Dowload is done'
+      state.cars = action.payload    //теперь перезаписываем стейт новыми данными полученными из асинк функции с запросом по АПИ. они попадают автоматом в Экшин и в нем есть пэйлоад / т.е. это будут наши Карсы с апишки!
+    }, //филд, состояние когда данные пришли!
+    
+    
+    
+    [getAllCars.rejected]: (state, action) => {}, //реджект это когда бек отдал ошибку по нашему запросу
   },
 });
 
-//методы экспортируем для использования , но что бы к ним обратиться нужно их получить из функции касСлайс через деструктуризацию
+export const { addCar, deleteCar } = carSlice.actions;
 
-export const { addCar, deleteCar } = carSlice.actions; //т.к. они являю.тся экшинами нашей функции!
-
-//так же экспортируем весь редюсер, пока непонятно зачем и что там внутри
-const carReducer = carSlice.reducer; 
+const carReducer = carSlice.reducer;
 export default carReducer;
