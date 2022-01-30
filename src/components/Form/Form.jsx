@@ -1,11 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addCar } from "../../store";
 
-const Form = ({ getFormData }) => {
+const Form = () => {
   const { handleSubmit, register, reset } = useForm();
+  const dispatch = useDispatch();    //новый хук для получения диспатча, откуда именно  - непонятно.
 
   const submit = (data) => {
-    getFormData(data);
+    //вызывает тут диспатч и идем в наши слайсы, берем оттуда нужный нам.
+    dispatch(addCar({data:data}))     //эддКар тоде функция, котрая принимает в себя стейт и экшин
     reset();
   };
 
