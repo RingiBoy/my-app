@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addCar } from "../../store";
+import { createCar } from "../../store";
 
 const Form = () => {
   const { handleSubmit, register, reset } = useForm();
@@ -9,7 +9,7 @@ const Form = () => {
 
   const submit = (data) => {
     //вызывает тут диспатч и идем в наши слайсы, берем оттуда нужный нам.
-    dispatch(addCar({data:data}))     //эддКар тоде функция, котрая принимает в себя стейт и экшин
+    dispatch(createCar({data:data}))     //эддКар тоде функция, котрая принимает в себя стейт и экшин
     reset();
   };
 
